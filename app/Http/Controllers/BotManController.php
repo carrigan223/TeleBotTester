@@ -17,7 +17,7 @@ class BotManController extends Controller
 
   $config = [
    'telegram' => [
-    'token' => '2033472918:AAHr6rvu5UuBLOXICJGYjysEFwxGqElqSOA',
+    'token' => env('TELEGRAM_TOKEN'),
    ],
   ];
   Drivers\DriverManager::loadDriver(\BotMan\Drivers\Telegram\TelegramDriver::class);
