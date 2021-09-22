@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers;
+use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
-use BotMan\BotMan\Messages\Incoming\Answer;
 use Illuminate\Support\Facades\Log;
 
 class BotManController extends Controller
@@ -37,12 +37,58 @@ class BotManController extends Controller
    * we are receiving dialogFlow answer
    */
   $botman->hears('hello', function ($botman) {
-   $botman->reply("<h1>Hello World</h1>");
+   $botman->reply("We are hitting Laravel with telegram");
   });
 
-  
+  $botman->hears('buttons', function ($botman) {
+   $this->questionTemplate($botman);
+  });
+
+  $botman->hears('hours', function ($botman) {
+   $botman->reply("We are hitting hours Laravel with telegram");
+   $this->questionTemplate($botman);
+
+  });
+
+  $botman->hears('location', function ($botman) {
+   $botman->reply("We are hitting location Laravel with telegram");
+   $this->questionTemplate($botman);
+
+  });
+
+  $botman->hears('feedback', function ($botman) {
+   $botman->reply("We are hitting feedback Laravel with telegram");
+   $this->questionTemplate($botman);
+
+  });
+
+  $botman->hears('specials', function ($botman) {
+   $botman->reply("We are hitting special Laravel with telegram");
+   $this->questionTemplate($botman);
+
+  });
+
+  $botman->hears('menu', function ($botman) {
+   $botman->reply("We are hitting menu Laravel with telegram");
+   $this->questionTemplate($botman);
+
+  });
+
   $botman->listen();
  }
+ public function questionTemplate($botman)
+ {
+  $question = Question::create('What else can I help you with?')
+   ->callbackId('select_time')
+   ->addButtons([
+    Button::create('Hours')->value('hours'),
+    Button::create('Location')->value('location'),
+    Button::create('Feedback')->value('feedback'),
+    Button::create('Specials')->value('specials'),
+    Button::create('Menu')->value('menu'),
 
+   ]);
+  $botman->reply($question);
+ }
 
 }
